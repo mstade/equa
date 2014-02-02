@@ -1,0 +1,108 @@
+html, body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  -webkit-user-select: none;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+#unit {
+  width: 1cm;
+  height: 1cm;
+}
+
+.grid {
+  stroke-width: .5mm;
+  stroke: #ddd;
+}
+
+.point {
+  stroke-width: .6mm;
+  stroke: #FF006B;
+  fill: white;
+}
+
+.interactive.point {
+  stroke-dasharray: 10, 10;
+}
+
+.interactive.point text {
+  stroke: none;
+}
+
+.axis {
+  stroke-width: .5mm;
+  stroke: #00DBFF;
+}
+
+.animated {
+  transition: .2s;
+  transition-timing-function: ease-out;
+}
+
+.dragging {
+  transition: none;
+}
+
+.line {
+  stroke-width: .5mm;
+  stroke: #FF006B;
+}
+
+#m circle {
+  fill: white;
+  stroke: none;
+}
+
+text, tspan {
+  font-size: 6mm;
+  font-weight: bold;
+  fill: #444;
+}
+
+.coordinates,
+.coordinates * {
+  font-size: 4mm;
+  margin: 1cm;
+}
+
+.dragged .coordinates {
+  opacity: 0;
+}
+
+.sub {
+  font-size: 4mm;
+  alignment-baseline: mathematical;
+}
+
+.point-data {
+  font-size: 4mm;
+}
+
+.math {
+  transition: .2s;
+}
+
+.math.dragging {
+  opacity: 0;
+}
+
+.math text {
+  font-size: 1cm;
+  alignment-baseline: before-edge;
+}
+
+.math text:nth-child(odd) {
+  fill: white;
+  stroke: white;
+  stroke-width: 1cm;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" patternUnits="userSpaceOnUse"
+        x="50%" y="50%" width="1cm" height="1cm">
+        <line class="grid" x2="100%" />
+        <line class="grid" y2="100%" />
+      </pattern>
+    </defs>
+    
+    <rect id="#unit"
+      width="1cm" height="1cm" 
+      fill="transparent"
+    />
+  
+    <rect width="100%" height="100%" fill="url(#grid)" />
+    <line id="x-axis" class="axis"
+      x2="100%" y1="50%" y2="50%"
+    />
+    <line id="y-axis" class="axis"
+      y2="100%" x1="50%" x2="50%"
+    />
+    
+    <circle id="origin" class="axis point"
+      cx="50%" cy="50%" r="2.5mm"
+    />
+    
+    <svg x="50%" y="50%">
+      <g transform="scale(1, -1)">
+        <line id="line" class="line animated"
+          x1="-200%" x2="200%"
+        />
+        
+        <g id="m" class="line animated">
+          <circle r="3mm" />
+          <line x1="-2mm" x2="2mm" />
+          <line y1="-2mm" y2="2mm" />
+        </g>
+        
+        <g id="p1" class="interactive animated point">
+          <circle r="1cm" />
+          <text class="coordinates" transform="scale(1, -1)"
+            x="-3.5mm" y="-1.5mm">
+            <tspan class="x">0</tspan>
+            <tspan x="-3.5mm" dy="5mm" class="y">0</tspan>
+          </text>
+        </g>
+        
+        <g id="p2" class="interactive animated point">
+          <circle r="1cm" />
+          <text class="coordinates" transform="scale(1, -1)"
+            x="-3.5mm" y="-1.5mm">
+            <tspan class="x">0</tspan>
+            <tspan x="-3.5mm" dy="5mm" class="y">0</tspan>
+          </text>
+        </g>
+      </g>
+    </svg>
+    
+    <g transform="translate(20)" class="math animated">
+      <text>y = kx + m</text>
+      <text>y = kx + m</text>
+    </g>
+  </svg>
+</body>
+</html>
