@@ -10,14 +10,6 @@ d3.selectAll('.interactive.point')
       .on('dragend',   _(drag(false), snap, d(recalc, place, type())))
   )
 
-d3.select('#m')
-  .call(
-    d3.behavior.drag()
-      .on('dragstart', drag(true))
-      .on('drag',      _(move('y'), d(place)))
-      .on('dragend',   _(drag(false), snap, d(place)))
-  )
-
 function drag(enabled) {
   return function() {
     d3.select(this)
