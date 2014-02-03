@@ -1,37 +1,52 @@
-var cm = document.getElementById('#unit').width.baseVal.value
+var cm = document.getElementById('#unit').width.baseVal.value 
 
-d3.selectAll('.interactive')
+d3.selectAll('.interactive.point')
   .data([[-2, -2], [2, 2]])
-  .each(_(place, recalc, type))
+  .each(_(recalc, place, type()))
   .call(
     d3.behavior.drag()
       .on('dragstart', drag(true))
-      .on('drag',      _(move, recalc, place))
-      .on('dragend',   _(snap, recalc, type, drag(false), place))
+      .on('drag',      _(move(), d(recalc, place, type())))
+      .on('dragend',   _(drag(false), snap, d(recalc, place, type())))
+  )
+
+d3.select('#m')
+  .call(
+    d3.behavior.drag()
+      .on('dragstart', drag(true))
+      .on('drag',      _(move('y'), d(place)))
+      .on('dragend',   _(drag(false), snap, d(place)))
   )
 
 function drag(enabled) {
   return function() {
     d3.select(this)
       .classed('dragged', enabled)
-    
-    d3.selectAll('.animated')
+      .attr('data-offset', enabled ? d3.mouse(this) : null)
+
+    d3.select('#' + this.id + '-data')
+      .classed('dragged', enabled)
+
+    d3.select('body')
       .classed('dragging', enabled)
   }
 }
 
-function move() {
-  var pt  = d3.select(this)
-    , px  = d3.event.x / cm
-    , py  = d3.event.y / cm
-  
-  pt.datum([px, py])
+function move(constraints) {
+  constraints || (constraints = 'xy')
+
+  return function() {
+    var pt  = d3.select(this)
+      , of  = pt.attr('data-offset').split(',')
+      , px  = ~constraints.indexOf('x') ? (d3.event.x - of[0]) / cm : 0
+      , py  = ~constraints.indexOf('y') ? (d3.event.y - of[1]) / cm : 0
+    
+    pt.datum([px, py]) 
+  }
 }
 
 function recalc() {
-  var vw = window.innerWidth
-    , vh = window.innerHeight
-    , p1 = d3.select('#p1').datum()
+  var p1 = d3.select('#p1').datum()
     , p2 = d3.select('#p2').datum()
     , dx = p2[0] - p1[0]
     , dy = p2[1] - p1[1]
@@ -41,30 +56,21 @@ function recalc() {
     , m  = p2[1] - k * p2[0]
     , th = Math.atan2(dy, dx)
   
-  d3.select('.line')
-    .style('-webkit-transform', f('translate($0cm, $1cm) rotate($2rad)', [cx, cy, th]))
+  d3.select('#line')
+    .style('-webkit-transform', f('translate3d($0cm, $1cm, 0) rotate($2rad)', [cx, cy, th]))
   
   d3.select('#m')
-    .style('-webkit-transform', f('translate(0, $0cm) rotate($1rad)', [m, th]))
+    .style('-webkit-transform', f('translate3d(0, $0cm, 0) rotate($1rad)', [m, th]))
   
   d3.select('.math')
-    .datum({ k: k, m: m, p1: p1, p2: p2 })
+    .datum({ k: k, m: m, p1: p1, p2: p2, cx: cx, cy: cy, th: th })
 }
 
 function place() {
   var pt = d3.select(this)
     , co = pt.datum()
-    , tm = [1, 0, 0, 1, 0, 0]
-  
-  if (pt.classed('dragging')) {
-    tm[0] = 1.5;
-    tm[3] = 1.5;
-  }
-  
-  tm[4] = co[0] * cm;
-  tm[5] = co[1] * cm;
-  
-  pt.style('-webkit-transform', f('matrix($0, $1, $2, $3, $4, $5)', tm))
+
+  pt.style('-webkit-transform', f('translate($0cm, $1cm)', co))
 }
 
 function snap() {
@@ -75,19 +81,26 @@ function snap() {
 }
 
 function type() {
-  var d  = d3.select('.math').datum()
-    , k  = n(d.k, 2) || ""
-    , m  = n(d.m, 2) || ""
-  
-  d3.selectAll('.math text').text(f('y = $0x$1', [k, m && ' + ' + m]))
-  
-  d3.selectAll('.interactive.point')
-    .each(function(d) {
-      var pt = d3.select(this)
+  var ds = d3.select('.math')
+    , fn = ds.select('.fn')
+    
+  return function() {
+    var co = ds.select('.coordinates')
+      , d  = ds.datum()
+      , k  = n(d.k, 1) || ""
+      , m  = n(d.m, 1) || ""
 
-      pt.select('.x').text('x: ' + n(d[0], 1))
-      pt.select('.y').text('y: ' + n(d[1], 1))
-    })
+    fn.text(f('y = $0x$1', [k, m && (m > 0 ? ' + ' : ' - ') + Math.abs(m)]))
+
+    co.selectAll('p')
+      .data([d.p1, d.p2])
+      .style('-webkit-transform', function(d, i, j) {
+        return f('translate($0cm, $1cm)', [ d[0], -d[1] ])
+      })
+        .selectAll('.x, .y')
+        .data(function(d) { return d })
+        .text(function(d) { return d.toFixed(1) })
+  }
 }
 
 function _() {
@@ -99,6 +112,21 @@ function _() {
    
     fns.forEach(function(fn) {
       fn.apply(self, args)
+    })
+  }
+}
+
+function d() {
+  var fns = [].slice.call(arguments)
+
+  return function() {
+    var self = this
+      , args = [].slice.call(arguments)
+
+    requestAnimationFrame(function() {
+      fns.forEach(function(fn) {
+        fn.apply(self, args)
+      })
     })
   }
 }

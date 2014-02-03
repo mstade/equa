@@ -36,44 +36,53 @@
       cx="50%" cy="50%" r="2.5mm"
     />
     
-    <svg x="50%" y="50%">
+    <svg class="cartesian" x="50%" y="50%">
       <g transform="scale(1, -1)">
-        <line id="line" class="line animated"
+        <line id="line" class="interactive line"
           x1="-200%" x2="200%"
         />
         
-        <g id="m" class="line animated">
+        <g id="m" class="interactive line">
           <circle r="3mm" />
           <line x1="-2mm" x2="2mm" />
           <line y1="-2mm" y2="2mm" />
         </g>
-        
-        <g id="p1" class="interactive animated point">
-          <circle r="1cm" />
-          <text class="coordinates" transform="scale(1, -1)"
-            x="-3.5mm" y="-1.5mm">
-            <tspan class="x">0</tspan>
-            <tspan x="-3.5mm" dy="5mm" class="y">0</tspan>
-          </text>
+
+        <g id="p1" class="interactive point">
+          <rect class="hit-area"
+            x="-1cm" y="-1cm"
+            width="2cm" height="2cm"
+          />
+          <circle class="foo" r="2mm" />
         </g>
-        
-        <g id="p2" class="interactive animated point">
-          <circle r="1cm" />
-          <text class="coordinates" transform="scale(1, -1)"
-            x="-3.5mm" y="-1.5mm">
-            <tspan class="x">0</tspan>
-            <tspan x="-3.5mm" dy="5mm" class="y">0</tspan>
-          </text>
+
+        <g id="p2" class="interactive point">
+          <rect class="hit-area"
+            x="-1cm" y="-1cm"
+            width="2cm" height="2cm"
+          />
+          <circle class="foo" r="2mm" />
         </g>
       </g>
     </svg>
-    
-    <g transform="translate(20)" class="math animated">
-      <text>y = kx + m</text>
-      <text>y = kx + m</text>
-    </g>
   </svg>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
+
+  <div class="math no-touch">
+    <p class="fn" data-fn="y = kx + m">y = kx + m</p>
+    <div class="coordinates">
+      <p id="p1-data">
+        <span class="x"></span>
+        <span class="y"></span>
+      </p>
+
+      <p id="p2-data">
+        <span class="x"></span>
+        <span class="y"></span>
+      </p>
+    </div>
+  </div>
+
+  <script src="d3.v3.js"></script>
   <script src="behavior.js"></script>
 </body>
 </html>

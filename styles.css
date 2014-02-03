@@ -9,9 +9,17 @@ html, body {
   height: 100%;
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 svg {
   width: 100%;
   height: 100%;
+}
+
+svg.cartesian {
   overflow: visible;
 }
 
@@ -31,22 +39,34 @@ svg {
   fill: white;
 }
 
-.interactive.point {
-  stroke-dasharray: 10, 10;
+.hit-area {
+  fill: transparent;
+  stroke: none;
 }
 
-.interactive.point text {
-  stroke: none;
+.interactive {
+  transition: .3s ease-out;
+}
+
+.dragging .interactive {
+  transition: none;
+}
+
+.interactive.point circle {
+  stroke-dasharray: 6.25mm, 0;
+  transition: .3s ease-out;
+}
+
+.interactive.point.dragged circle {
+  fill: transparent;
+  stroke-width: 0.3mm;
+  stroke-dasharray: 1.57mm, 1.57mm;
+  -webkit-transform: scale(10);
 }
 
 .axis {
   stroke-width: .5mm;
   stroke: #00DBFF;
-}
-
-.animated {
-  transition: .2s;
-  transition-timing-function: ease-out;
 }
 
 .dragging {
@@ -63,22 +83,6 @@ svg {
   stroke: none;
 }
 
-text, tspan {
-  font-size: 6mm;
-  font-weight: bold;
-  fill: #444;
-}
-
-.coordinates,
-.coordinates * {
-  font-size: 4mm;
-  margin: 1cm;
-}
-
-.dragged .coordinates {
-  opacity: 0;
-}
-
 .sub {
   font-size: 4mm;
   alignment-baseline: mathematical;
@@ -88,21 +92,61 @@ text, tspan {
   font-size: 4mm;
 }
 
+.no-touch {
+  pointer-events: none;
+}
+
 .math {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
   transition: .2s;
+  text-shadow: 0 0 2mm white,
+               0 0 2mm white,
+               0 0 2mm white,
+               0 0 2mm white,
+               0 0 2mm white;
 }
 
-.math.dragging {
-  opacity: 0;
-}
-
-.math text {
+.fn {
+  padding-left: 0.5cm;
+  display: inline;
   font-size: 1cm;
-  alignment-baseline: before-edge;
+  font-weight: bold;
 }
 
-.math text:nth-child(odd) {
-  fill: white;
-  stroke: white;
-  stroke-width: 1cm;
+.coordinates {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 6mm;
+  text-align: right;
+}
+
+.coordinates p {
+  position: absolute;
+  margin-top: -1.2em;
+}
+
+.coordinates p:not(.dragged) {
+  transition: .3s ease-out;
+}
+
+.x, .y {
+  display: block;
+  line-height: 1.2em;
+  transition: .3s ease-out;
+  text-shadow: 0 0 2mm white,
+               0 0 2mm white,
+               0 0 2mm white,
+               0 0 2mm white,
+               0 0 2mm white;
+  -webkit-transform: translate(-1.5cm, 0);
+}
+
+.dragged .x,
+.dragged .y {
+  -webkit-transform: translate(-4cm, 0);
 }
