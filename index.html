@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset=utf-8 />
+  <meta charset="utf-8" />
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-  <link rel="stylesheet" href="styles.css"></link>
-  <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
+  <link rel="stylesheet" href="lib/ui/styles.css"></link>
+  <link rel="apple-touch-icon" sizes="152x152" href="lib/icon.png">
 
   <title>Linear Equation</title>
 </head>
-<body>
-  <svg xmlns="http://www.w3.org/2000/svg">
+<body class="stack">
+  <div id="math" class="panel">
+    <p class="fn" data-fn="y = kx + m">y = kx + m</p>
+  </div>
+  
+  <svg id="graph" class="panel" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <pattern id="grid" patternUnits="userSpaceOnUse"
         x="50%" y="50%" width="1cm" height="1cm">
@@ -36,53 +41,20 @@
       cx="50%" cy="50%" r="2.5mm"
     />
     
-    <svg class="cartesian" x="50%" y="50%">
-      <g transform="scale(1, -1)">
-        <line id="line" class="interactive line"
-          x1="-200%" x2="200%"
-        />
-        
-        <g id="m" class="interactive line">
-          <circle r="3mm" />
-          <line x1="-2mm" x2="2mm" />
-          <line y1="-2mm" y2="2mm" />
-        </g>
-
-        <g id="p1" class="interactive point">
-          <rect class="hit-area"
-            x="-1cm" y="-1cm"
-            width="2cm" height="2cm"
-          />
-          <circle class="foo" r="2mm" />
-        </g>
-
-        <g id="p2" class="interactive point">
-          <rect class="hit-area"
-            x="-1cm" y="-1cm"
-            width="2cm" height="2cm"
-          />
-          <circle class="foo" r="2mm" />
-        </g>
-      </g>
+    <svg x="50%" y="50%" overflow="visible">
+      <g class="canvas" transform="scale(1, -1)"></g>
     </svg>
   </svg>
 
-  <div class="math no-touch">
-    <p class="fn" data-fn="y = kx + m">y = kx + m</p>
-    <div class="coordinates">
-      <p id="p1-data">
-        <span class="x"></span>
-        <span class="y"></span>
-      </p>
+  <svg id="add" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50%" cy="50%" r="45%" />
+    <line x1="50%" x2="50%" y1="20%" y2="80%" />
+    <line x1="20%" x2="80%" y1="50%" y2="50%" />
+    <circle cx="50%" cy="50%" r="45%" />
+    <line x1="50%" x2="50%" y1="20%" y2="80%" />
+    <line x1="20%" x2="80%" y1="50%" y2="50%" />
+  </svg>
 
-      <p id="p2-data">
-        <span class="x"></span>
-        <span class="y"></span>
-      </p>
-    </div>
-  </div>
-
-  <script src="d3.v3.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

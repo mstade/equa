@@ -1,0 +1,30 @@
+{
+  "name": "equa",
+  "version": "0.0.0",
+  "description": "Equation Visualizer",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha",
+    "devenv": "http-server -p 8000 -c-1 & watchify lib/main.js -o app.js -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mstade/equa.git"
+  },
+  "author": "Marcus Stade",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mstade/equa/issues"
+  },
+  "homepage": "http://mstade.github.io/equa/",
+  "devDependencies": {
+    "chai": "~1.9.0",
+    "mocha": "~1.17.1",
+    "watchify": "~0.5.6",
+    "browserify": "~3.24.11",
+    "http-server": "~0.6.1"
+  },
+  "dependencies": {
+    "d3": "~3.4.1"
+  }
+}
