@@ -10,12 +10,47 @@
 
   <title>Linear Equation</title>
 </head>
-<body class="stack">
-  <div id="math" class="panel">
-    <p class="fn" data-fn="y = kx + m">y = kx + m</p>
-  </div>
-  
-  <svg id="graph" class="panel" xmlns="http://www.w3.org/2000/svg">
+<body>
+  <svg id="graph" version="1.0" xmlns="http://www.w3.org/2000/svg">
+    <style type="text/css"><![CDATA[
+      .grid {
+        stroke-width: .5mm;
+        stroke: #ddd;
+      }
+
+      .hit-area {
+        fill: transparent;
+        stroke: none;
+      }
+
+      .axis {
+        stroke-width: .3mm;
+        stroke: #00DBFF;
+      }
+
+      .origin {
+        fill: white;
+      }
+
+      .line {
+        stroke-width: .5mm;
+        stroke: #FF006B;
+        -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
+      }
+
+      .line[data-index='0'] { stroke: rgb(27,158,119)  }
+      .line[data-index='1'] { stroke: rgb(217,95,2)    }
+      .line[data-index='2'] { stroke: rgb(117,112,179) }
+      .line[data-index='3'] { stroke: rgb(231,41,138)  }
+      .line[data-index='4'] { stroke: rgb(102,166,30)  }
+      .line[data-index='5'] { stroke: rgb(230,171,2)   }
+
+      .line .m circle {
+        fill: white;
+        stroke: none;
+      }
+    ]]></style>
+
     <defs>
       <pattern id="grid" patternUnits="userSpaceOnUse"
         x="50%" y="50%" width="1cm" height="1cm">
@@ -30,30 +65,32 @@
     />
   
     <rect width="100%" height="100%" fill="url(#grid)" />
-    <line id="x-axis" class="axis"
+    <line class="axis"
       x2="100%" y1="50%" y2="50%"
     />
-    <line id="y-axis" class="axis"
+    <line class="axis"
       y2="100%" x1="50%" x2="50%"
     />
     
-    <circle id="origin" class="axis point"
+    <circle class="axis origin"
       cx="50%" cy="50%" r="2.5mm"
     />
     
     <svg x="50%" y="50%" overflow="visible">
-      <g class="canvas" transform="scale(1, -1)"></g>
+      <g class="plot" transform="scale(1, -1)">
+      <!--   <circle cx="-25%" cy="25%" fill="red" r="1cm" />
+        <circle cx="25%" cy="-25%" fill="green" r="1cm" /> -->
+      </g>
     </svg>
   </svg>
 
-  <svg id="add" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="50%" cy="50%" r="45%" />
-    <line x1="50%" x2="50%" y1="20%" y2="80%" />
-    <line x1="20%" x2="80%" y1="50%" y2="50%" />
-    <circle cx="50%" cy="50%" r="45%" />
-    <line x1="50%" x2="50%" y1="20%" y2="80%" />
-    <line x1="20%" x2="80%" y1="50%" y2="50%" />
-  </svg>
+  <div class="left graph-part interactive"></div>
+  <div class="right graph-part interactive"></div>
+
+  <div id="math" class="interactive"></div>
+
+  <button id="add"></button>
+  <button id="edit"></button>
 
   <script src="app.js"></script>
 </body>
