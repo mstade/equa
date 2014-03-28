@@ -25,6 +25,7 @@
     "http-server": "~0.6.1"
   },
   "dependencies": {
-    "d3": "~3.4.1"
+    "d3": "~3.4.1",
+    "fastclick": "~1.0.0"
   }
 }

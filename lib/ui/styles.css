@@ -1,12 +1,20 @@
-html, body {
-  font-family: -apple-system-font, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: white;
-  -webkit-user-select: none;
+html {
+  margin:0;
+  padding:0;
   overflow: hidden;
+}
+
+body {
+  position: absolute;
   width: 100%;
   height: 100%;
+  margin:0;
+  padding:0;
+  overflow: hidden;
+  background-color: white;
+  -webkit-user-select: none;
+  font-family: -apple-system-font, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 }
 
 p {
@@ -15,47 +23,9 @@ p {
 }
 
 #graph {
-  -webkit-flow-into: content;
-  width: 100vw;
-  height: 100vh;
-  -webkit-transform: translate(0%, -100%) rotate(90deg);
-  -webkit-transform-origin: 0 100%;
-}
-
-.graph-part {
-  -webkit-flow-from: content;
-}
-
-.left.graph-part {
-  position: absolute; bottom: 0; left: 0;
-  width: 100vh;
-  height: 100vw;
-  -webkit-transform: translate(0, 100%)rotate(-90deg);
-  -webkit-transform-origin: 0 0;
-}
-
-.left.graph-part.edit {
-  height: 66vw;
-}
-
-.right.graph-part {
-  position: absolute; bottom: 0; right: 0;
-  width: 100vh;
-  height: 0vw;
-  text-shadow: 0 0 2mm white,
-               0 0 2mm white,
-               0 0 2mm white,
-               0 0 2mm white,
-               0 0 2mm white;
-
-  -webkit-transform: translate(100%, 0%) rotate(-90deg);
-  -webkit-transform-origin: 0 100%;
-  transition-property: height;
-  -webkit-filter: blur(12px);
-}
-
-.right.graph-part.edit {
-  height: 34vw;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 #add, #edit {
@@ -96,56 +66,74 @@ p {
 
 #math {
   position: absolute; top: 0; right: 0;
-  width: 34vw;
+  width: 12.5cm;
   height: 100vh;
-  background: rgba(248, 248, 248, 0.2);
+  background: rgba(255, 255, 255, 0.5);
   box-shadow:
-    4px 0px 8px rgba(0,0,0,1),
-    inset 1px 0px 0 rgba(255, 255, 255, 1);
-  -webkit-transform: translate(100%, 0);
+    1mm 0px 2mm rgba(0,0,0,.5),
+    inset .5mm 0px 0cm rgba(255, 255, 255, 1),
+    inset 0 0 4cm rgba(250, 250, 250, 0.6),
+    inset 0 0 7cm rgba(248, 248, 248, 0.6);
+  -webkit-transform: translate3d(100%, 0, 0);
+     -moz-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
 }
 
 #math.edit {
-  -webkit-transform: translate(0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+     -moz-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
-.fn {
-  padding-left: 0.5cm;
-  display: inline;
+#math ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.equa {
+  line-height: 1cm;
+  display: block;
+  margin: .5cm 0;
+}
+
+.equa > * {
+  display: inline-block;
+  height: 1cm;
+  vertical-align: top;
+}
+
+.equa > span {
   font-size: 1cm;
   font-weight: bold;
+  margin-top: -.1em;
 }
 
-.coordinates {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 6mm;
-  text-align: right;
+.equa .fn::after {
+  content: '=';
+  padding: 0 .25em;
 }
 
-.coordinates p {
-  position: absolute;
-  margin-top: -1.2em;
+.equa .del {
+  -webkit-appearance: none;
+  outline: 0;
+  border: 0;
+  margin: 0 .5cm;
+  padding: 0;
+  width: 1cm;
+  height: 1cm;
+  background: url(del.svg) top left / 100%;
 }
 
-.coordinates p:not(.dragged) {
-  transition: .3s ease-out;
-}
-
-.x, .y {
-  display: block;
-  line-height: 1.2em;
-  transition: .3s ease-out;
-  text-shadow: 0 0 2mm white,
-               0 0 2mm white,
-               0 0 2mm white,
-               0 0 2mm white,
-               0 0 2mm white;
-  -webkit-transform: translate(-1.5cm, 0);
-}
-
-.dragged .x,
-.dragged .y {
-  -webkit-transform: translate(-4cm, 0);
-}
+.line[data-index='0'] { stroke: rgb(27,158,119)  }
+.equa[data-index='0'] { color: rgb(27,158,119)  }
+.line[data-index='1'] { stroke: rgb(217,95,2)    }
+.equa[data-index='1'] { color: rgb(217,95,2)    }
+.line[data-index='2'] { stroke: rgb(117,112,179) }
+.equa[data-index='2'] { color: rgb(117,112,179) }
+.line[data-index='3'] { stroke: rgb(231,41,138)  }
+.equa[data-index='3'] { color: rgb(231,41,138)  }
+.line[data-index='4'] { stroke: rgb(102,166,30)  }
+.equa[data-index='4'] { color: rgb(102,166,30)  }
+.line[data-index='5'] { stroke: rgb(230,171,2)   }
+.equa[data-index='5'] { color: rgb(230,171,2)   }

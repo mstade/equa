@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
   <link rel="stylesheet" href="lib/ui/styles.css"></link>
@@ -13,14 +14,23 @@
 <body>
   <svg id="graph" version="1.0" xmlns="http://www.w3.org/2000/svg">
     <style type="text/css"><![CDATA[
+      #graph * {
+        pointer-events: none;
+      }
+
       .grid {
+        fill: white;
+      }
+
+      .grid line {
         stroke-width: .5mm;
         stroke: #ddd;
       }
 
       .hit-area {
-        fill: transparent;
+        fill: none;
         stroke: none;
+        pointer-events: all !important;
       }
 
       .axis {
@@ -38,13 +48,6 @@
         -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
       }
 
-      .line[data-index='0'] { stroke: rgb(27,158,119)  }
-      .line[data-index='1'] { stroke: rgb(217,95,2)    }
-      .line[data-index='2'] { stroke: rgb(117,112,179) }
-      .line[data-index='3'] { stroke: rgb(231,41,138)  }
-      .line[data-index='4'] { stroke: rgb(102,166,30)  }
-      .line[data-index='5'] { stroke: rgb(230,171,2)   }
-
       .line .m circle {
         fill: white;
         stroke: none;
@@ -52,16 +55,18 @@
     ]]></style>
 
     <defs>
-      <pattern id="grid" patternUnits="userSpaceOnUse"
+      <pattern id="grid"
+        class="grid" patternUnits="userSpaceOnUse"
         x="50%" y="50%" width="1cm" height="1cm">
-        <line class="grid" x2="100%" />
-        <line class="grid" y2="100%" />
+        <rect width="100%" height="100%" />
+        <line x2="100%" />
+        <line y2="100%" />
       </pattern>
     </defs>
     
-    <rect id="#unit"
+    <rect id="unit"
       width="1cm" height="1cm" 
-      fill="transparent"
+      fill="none"
     />
   
     <rect width="100%" height="100%" fill="url(#grid)" />
@@ -71,7 +76,6 @@
     <line class="axis"
       y2="100%" x1="50%" x2="50%"
     />
-    
     <circle class="axis origin"
       cx="50%" cy="50%" r="2.5mm"
     />
@@ -81,13 +85,16 @@
       <!--   <circle cx="-25%" cy="25%" fill="red" r="1cm" />
         <circle cx="25%" cy="-25%" fill="green" r="1cm" /> -->
       </g>
+
+      <!-- <g class="info" transform="scale(1, -1)">
+        <circle
+      </g> -->
     </svg>
   </svg>
 
-  <div class="left graph-part interactive"></div>
-  <div class="right graph-part interactive"></div>
-
-  <div id="math" class="interactive"></div>
+  <div id="math" class="interactive">
+    <ul></ul>
+  </div>
 
   <button id="add"></button>
   <button id="edit"></button>
